@@ -1,0 +1,82 @@
+body{
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    background: linear-gradient(45deg,red,blue,green,black);
+    background-size: 400% 400%;
+    position: relative;
+    animation: cambiar 10s ease-in-out infinite;
+}
+
+.register-container{
+    background-color: #ffffff;
+    border-radius: 30px;
+    margin-left: 30%;
+    margin-right: 30%;
+    padding-top: 20px;
+    padding-bottom: 40px;
+
+}
+
+.register-container h1{
+    font-size: 3rem;
+}
+.rol-selector-container{
+    color: black;
+    font-size: 1.5rem;
+}
+.rol-selector-container img{
+    width: 60%;
+    height: 20%;
+}
+
+.rol-selector-container button{
+    border-style: solid;
+    border-color: #14222A;
+    border-width: 4px;
+
+    font-size: large;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 25px;
+    padding-left: 25px;
+    border-radius: 10px;
+    margin-right: 20px;
+    margin-left: 20px;
+    color: #000000;
+    background-color: #ffffff;
+    
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.rol-selector-container button:hover{
+    background-color: #14222A;
+    color: #ffffff;
+}
+
+.rol-selector-container button:focus{
+    background-color: #14222A;
+    color: #ffffff;
+}
+
+/* media queries */
+
+@media screen and (max-width: 1200px){
+    .register-container{
+        background-color: #ffffff;
+        margin-left: 20%;
+        margin-right: 20%;
+    }.rol-selector-container img{
+        width: 100%;
+        height: 20%;
+    }.rol-selector-container h2{
+        font-size: 2rem;
+    }
+}
+
+
+@keyframes cambiar{
+    0%{background-position: 0 50%;}
+    50%{background-position: 100% 50%;}
+    100%{background-position: 0 50%;}
+}
