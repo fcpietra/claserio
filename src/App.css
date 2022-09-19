@@ -130,3 +130,19 @@ body{
   }
 }
 
+.register-container {
+  width: 100%;
+}
+
+.box-container{
+  color: white;
+  background-color: white;
+  border-radius: 20px;
+  padding: 50px 40px 50px 20px;
+  opacity: 0.9;
+}
+
+
+#top-register{
+  margin-top: -30px;
+}

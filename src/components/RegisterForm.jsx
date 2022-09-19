@@ -1,10 +1,8 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
+import "../App.css";
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -14,23 +12,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        claser.io
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Select from "./SelectEstudios";
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function RegisterForm() {
     const [alignment, setAlignment] = React.useState('web');
 
     const handleChange = (event, newAlignment) => {
@@ -46,10 +32,46 @@ export default function SignUp() {
     });
   };
 
+  function generateInput() {
+    if (alignment === 'estudiante') {
+        return (
+            <>
+            <Grid item xs={12}>
+                <TextField
+                    required
+                    fullWidth
+                    id="fechaNacimiento"
+                    label="Fecha Nacimiento"
+                    name="fechaNacimiento"
+                    autoComplete="name"
+                />
+            </Grid>
+                <Select  />
+            </>
+
+        );
+    }
+    else if (alignment === 'docente') {
+        return (
+            <Grid item xs={12}>
+            <TextField
+                required
+                fullWidth
+                id="name"
+                label="Nombre"
+                name="name"
+                autoComplete="name"
+            />
+            </Grid>
+        );
+    }
+    return undefined;
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+
         <Box
           sx={{
             marginTop: 8,
@@ -58,14 +80,14 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar  id="top-register" sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Registro
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
+            <Grid className="box-container" container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
@@ -119,7 +141,6 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-              <Typography variant="body3" color="text.secondary" align="left">Soy </Typography>
               <ToggleButtonGroup
                 variant="text"
                 color="primary"
@@ -133,6 +154,7 @@ export default function SignUp() {
                 <ToggleButton value="docente">Docente</ToggleButton>
             </ToggleButtonGroup>
             </Grid>
+              {generateInput()}
             </Grid>
             <Button
               type="submit"
@@ -144,14 +166,14 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   ¿Ya tenés tu cuenta? Ingresá
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+
       </Container>
     </ThemeProvider>
   );
