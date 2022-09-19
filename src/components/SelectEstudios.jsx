@@ -41,10 +41,15 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SelectEstudios() {
-    const [age, setAge] = React.useState('');
-    const handleChange = (event) => {
-        setAge(event.target.value);
+    const [state, setState] = React.useState('');
+    const handleChangeState = (event) => {
+        setState(event.target.value);
     };
+
+    const [type, setType] = React.useState('');
+    const handleChangeType = (event) => {
+        setType(event.target.value);
+    }
     return (
         <div>
             <FormControl sx={{ m: 1 }} variant="standard">
@@ -56,8 +61,8 @@ export default function SelectEstudios() {
                 <Select
                     labelId="demo-customized-select-label"
                     id="demo-customized-select"
-                    value={age} // TODO: cambiar por el estado
-                    onChange={handleChange}
+                    value={state}
+                    onChange={handleChangeState}
                     input={<BootstrapInput />}
                 >
 
@@ -70,8 +75,8 @@ export default function SelectEstudios() {
                 <InputLabel htmlFor="demo-customized-select-native">Tipo</InputLabel>
                 <NativeSelect
                     id="demo-customized-select-native"
-                    value={age}
-                    onChange={handleChange}
+                    value={type}
+                    onChange={handleChangeType}
                     input={<BootstrapInput />}
                 >
                     <option aria-label="None" value="" />
