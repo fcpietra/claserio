@@ -7,7 +7,6 @@ import './App.css';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Register from './components/RegisterForm';
-import Class from './components/Class';
 
 function App() {
   return (
@@ -17,7 +16,7 @@ function App() {
           <Route path="/" element={<Landing/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
-            <Route path="/class" element={<Class/>}/>
+            <Route path="/class" element={<Register registrar="clase"/>}/>
           <Route path="*" element={<h1>404: Not Found</h1>}/>
         </Routes>
         <Footer/>

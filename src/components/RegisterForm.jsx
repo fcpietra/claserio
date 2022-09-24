@@ -16,7 +16,7 @@ import Select from "./SelectEstudios";
 
 const theme = createTheme();
 
-export default function RegisterForm() {
+export default function RegisterForm(props) {
     const [alignment, setAlignment] = React.useState('web');
 
     const handleChange = (event, newAlignment) => {
@@ -68,113 +68,209 @@ export default function RegisterForm() {
     return undefined;
   }
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+function setup() {
+    if (props.registrar === "clase") {
+        return (
+            <ThemeProvider theme={theme}>
+                <Container component="main" maxWidth="xs">
 
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar  id="top-register" sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Registro
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid className="box-container" container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="nombre"
-                  required
-                  fullWidth
-                  id="nombre"
-                  label="Nombre"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="apellido"
-                  label="Apellido"
-                  name="apellido"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="telefono"
-                  label="Teléfono"
-                  name="telefono"
-                  autoComplete="email"
-                />
-              </Grid>              
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-              <ToggleButtonGroup
-                variant="text"
-                color="primary"
-                value={alignment}
-                exclusive
-                fullWidth
-                onChange={handleChange}
-                aria-label="Platform"
-                >
-                <ToggleButton value="estudiante">Estudiante</ToggleButton>
-                <ToggleButton value="docente">Docente</ToggleButton>
-            </ToggleButtonGroup>
-            </Grid>
-              {generateInput()}
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Registrarse
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/login" variant="body2">
-                  ¿Ya tenés tu cuenta? Ingresá
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
+                    <Box
+                        sx={{
+                            marginTop: 8,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Avatar  id="top-register" sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Registro Clase
+                        </Typography>
+                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                            <Grid className="box-container" container spacing={2}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        autoComplete="given-name"
+                                        name="nombre_clase"
+                                        required
+                                        fullWidth
+                                        id="nombre_clase"
+                                        label="Nombre Clase"
+                                        autoFocus
+                                    />
+                                </Grid>
+                                <Grid item xs={12} >
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="materia_clase"
+                                        label="Materia"
+                                        name="materia_clase"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="duracion_clase"
+                                        label="Duración"
+                                        name="duracion_clase"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="frecuencia_clase"
+                                        label="Frecuencia"
+                                        name="frencuencia_clase"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        name="costo_clase"
+                                        label="Costo"
+                                        id="costo_clase"
+                                    />
+                                </Grid>
 
-      </Container>
-    </ThemeProvider>
-  );
+                            </Grid>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                            >
+                                Crear clase
+                            </Button>
+
+                        </Box>
+                    </Box>
+
+                </Container>
+            </ThemeProvider>
+        )
+    } else if (props.registrar === "usuario") {
+        return (
+            <ThemeProvider theme={theme}>
+                <Container component="main" maxWidth="xs">
+
+                    <Box
+                        sx={{
+                            marginTop: 8,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Avatar  id="top-register" sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Registro Usuario
+                        </Typography>
+                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                            <Grid className="box-container" container spacing={2}>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        autoComplete="given-name"
+                                        name="nombre"
+                                        required
+                                        fullWidth
+                                        id="nombre"
+                                        label="Nombre"
+                                        autoFocus
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="apellido"
+                                        label="Apellido"
+                                        name="apellido"
+                                        autoComplete="family-name"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="email"
+                                        label="Email"
+                                        name="email"
+                                        autoComplete="email"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="telefono"
+                                        label="Teléfono"
+                                        name="telefono"
+                                        autoComplete="email"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        name="password"
+                                        label="Password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="new-password"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <ToggleButtonGroup
+                                        variant="text"
+                                        color="primary"
+                                        value={alignment}
+                                        exclusive
+                                        fullWidth
+                                        onChange={handleChange}
+                                        aria-label="Platform"
+                                    >
+                                        <ToggleButton value="estudiante">Estudiante</ToggleButton>
+                                        <ToggleButton value="docente">Docente</ToggleButton>
+                                    </ToggleButtonGroup>
+                                </Grid>
+                                {generateInput()}
+                            </Grid>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                            >
+                                Registrarse
+                            </Button>
+                            <Grid container justifyContent="flex-end">
+                                <Grid item>
+                                    <Link href="/login" variant="body2">
+                                        ¿Ya tenés tu cuenta? Ingresá
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Box>
+
+                </Container>
+            </ThemeProvider>
+        )
+    }
+}
+
+
+return (
+    <div>
+        {setup()}
+    </div>
+    );
 }
