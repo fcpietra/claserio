@@ -15,8 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing/>}/>
           <Route path="/login" element={<Login/>}/>
-          <Route path="/register" element={<Register/>}/>
-            <Route path="/class" element={<Register registrar="clase"/>}/>
+          <Route path="/register" element={<Register registrar="usuario"/>}/>
+          <Route path="/class" element={<Register registrar="clase"/>}/>
           <Route path="*" element={<h1>404: Not Found</h1>}/>
         </Routes>
         <Footer/>
