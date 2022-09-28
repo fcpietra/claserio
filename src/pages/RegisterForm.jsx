@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import Select from "./SelectEstudios";
+import Select from "../components/SelectEstudios";
 
 const theme = createTheme();
 
@@ -253,7 +253,7 @@ function setup() {
                             </Button>
                             <Grid container justifyContent="flex-end">
                                 <Grid item>
-                                    <Link href="/login" variant="body2">
+                                    <Link href="/login" >
                                         ¿Ya tenés tu cuenta? Ingresá
                                     </Link>
                                 </Grid>
@@ -266,7 +266,6 @@ function setup() {
         )
     }
 }
-
 
 return (
     <div>
