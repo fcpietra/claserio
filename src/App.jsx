@@ -4,9 +4,12 @@ import {Route, Routes} from 'react-router-dom';
 import Footer from './components/Footer';
 import HeaderMUI from './components/HeaderMUI';
 import './App.css';
-import Landing from './components/Landing';
-import Login from './components/Login';
-import Register from './components/RegisterForm';
+import Landing from './pages/Landing';
+import Login from './pages/Login';
+import Register from './pages/RegisterForm';
+import Recovery from "./pages/Recovery";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -15,9 +18,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing/>}/>
           <Route path="/login" element={<Login/>}/>
-          <Route path="/register" element={<Register registrar="usuario"/>}/>
-          <Route path="/class" element={<Register registrar="clase"/>}/>
-          <Route path="*" element={<h1>404: Not Found</h1>}/>
+            <Route path="/home" element={<Home/>}/>
+          <Route path="/register/user" element={<Register registrar="usuario"/>}/>
+          <Route path="/register/class" element={<Register registrar="clase"/>}/>
+
+            <Route path="/recovery" element={<Recovery/>}/>
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
         <Footer/>
       </div>
