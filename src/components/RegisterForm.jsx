@@ -12,12 +12,16 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Select from "./SelectEstudios";
 
 const theme = createTheme();
 
 export default function RegisterForm() {
     const [alignment, setAlignment] = React.useState('web');
+    const [value, setValue] = React.useState(null);
 
     const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -34,19 +38,26 @@ export default function RegisterForm() {
 
   function generateInput() {
     if (alignment === 'estudiante') {
-        return (
+      return (
             <>
             <Grid item xs={12}>
-                <TextField
-                    required
-                    fullWidth
-                    id="fechaNacimiento"
-                    label="Fecha Nacimiento"
-                    name="fechaNacimiento"
-                    autoComplete="name"
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="es">
+                <DatePicker
+                  label="Fecha de nacimiento"
+                  inputFormat = "DD/MM/YYYY"
+                  openTo='year'
+                  adapterLocale="es"
+                  value={value}
+                  onChange={(newValue) => {
+                    setValue(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
                 />
+              </LocalizationProvider>            
             </Grid>
-                <Select  />
+            <Grid item xs={12}>
+              <Select></Select>
+            </Grid>
             </>
 
         );
@@ -57,10 +68,10 @@ export default function RegisterForm() {
             <TextField
                 required
                 fullWidth
-                id="name"
-                label="Nombre"
-                name="name"
-                autoComplete="name"
+                id="title"
+                label="Título de grado"
+                name="title"
+                autoComplete="title"
             />
             </Grid>
         );
