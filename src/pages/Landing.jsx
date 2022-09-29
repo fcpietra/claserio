@@ -1,7 +1,6 @@
 import React from "react";
 import "../App.css";
-import Image from "./Image";
-import { Link } from "react-router-dom";
+import Image from "../components/Image";
 
 export default function Landing(){
 
@@ -9,7 +8,13 @@ export default function Landing(){
         <div className="main-content-container">
             <h1>Unite a la comunidad de aprendizaje online de la <strong>UADE</strong></h1>
             <p>Echale un ojo a nuestros cursos completamente a <strong>demanda</strong>!</p>
-            
+
+            <div className="login--register">
+                <a href="/login">Login</a>
+                <a href="/register/user">Register</a>
+            </div>
+
+
             <div className="info--container">
                 <Image url="img/people-looking-phone.png" description = "Recordá que tenemos clases específicamente en grupo, así que no olvides compartirlas con tus amigos para poder trabajar juntos!" isVisible={true}></Image>
             

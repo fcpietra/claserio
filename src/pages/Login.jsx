@@ -12,8 +12,9 @@ export default function Login(){
 
             <br/>
 
-            <a className="login--button" href="#">Log in</a><br/><br/>
-            <a href="#">I forgot my password</a>
+            <a className="login--button" href="home">Log in</a><br/><br/><br/>
+            <a href="/recovery">I forgot my password</a><br/><br/>
+            <a href="/register/user">I don't have an account</a>
         </div>
     );
 }
