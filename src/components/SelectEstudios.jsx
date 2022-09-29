@@ -4,6 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Grid from '@mui/material/Grid';
 import NativeSelect from '@mui/material/NativeSelect';
 import InputBase from '@mui/material/InputBase';
 
@@ -52,9 +53,21 @@ export default function SelectEstudios() {
     }
     return (
         <div>
-            <FormControl sx={{ m: 1 }} variant="standard">
-                <InputLabel htmlFor="demo-customized-textbox">Institucion</InputLabel>
-                <BootstrapInput id="demo-customized-textbox" />
+            <Grid item xs={12}>
+            <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="nivel-estudios">Nivel de estudios</InputLabel>
+                <Select
+                labelId="nivel-estudios"
+                id="nivel-estudios-select-standard"
+                value={type}
+                onChange={handleChangeState}
+                label="Type"
+                >
+                <MenuItem value="primario">Primario</MenuItem>
+                <MenuItem value="secundario">Secundario</MenuItem>
+                <MenuItem value="terciario">Terciario</MenuItem>
+                <MenuItem value="universitario">Universitario</MenuItem>
+                </Select>
             </FormControl>
             <FormControl sx={{ m: 1 }} variant="standard">
                 <InputLabel id="demo-customized-select-label">Estado</InputLabel>
@@ -63,28 +76,13 @@ export default function SelectEstudios() {
                     id="demo-customized-select"
                     value={state}
                     onChange={handleChangeState}
-                    input={<BootstrapInput />}
                 >
-
                     <MenuItem value={"incompleto"}>Incompleto</MenuItem>
-                    <MenuItem value={"proceso"}>En progreso</MenuItem>
+                    <MenuItem value={"proceso"}>En curso</MenuItem>
                     <MenuItem value={"completo"}>Completo</MenuItem>
                 </Select>
             </FormControl>
-            <FormControl sx={{ m: 1 }} variant="standard">
-                <InputLabel htmlFor="demo-customized-select-native">Tipo</InputLabel>
-                <NativeSelect
-                    id="demo-customized-select-native"
-                    value={type}
-                    onChange={handleChangeType}
-                    input={<BootstrapInput />}
-                >
-                    <option aria-label="None" value="" />
-                    <option value={"primario"}>Primario</option>
-                    <option value={"secundario"}>Secundario</option>
-                    <option value={"universitario"}>Universitario</option>
-                </NativeSelect>
-            </FormControl>
+            </Grid>
         </div>
     );
 }
