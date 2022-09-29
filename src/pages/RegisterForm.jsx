@@ -40,10 +40,12 @@ export default function RegisterForm(props) {
                 <TextField
                     required
                     fullWidth
+                    type="date"
                     id="fechaNacimiento"
-                    label="Fecha Nacimiento"
+                    label="Fecha de nacimiento"
                     name="fechaNacimiento"
                     autoComplete="name"
+                    InputLabelProps={{shrink: true}}
                 />
             </Grid>
                 <Select  />
