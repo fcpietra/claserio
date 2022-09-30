@@ -12,10 +12,13 @@ import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Button from '@mui/material/Button'
 import "../App.css";
 import Rating from "./Rating";
 import Comment from "./Comment";
 import Modal from "./Modal";
+import ModalContratar from "./ModalContratar";
+
 import {useState} from "react";
 
 
@@ -38,7 +41,7 @@ export default function RecipeReviewCard(props) {
     };
 
     const [moreInfo, setMoreInfo] = useState(false);
-
+    const [contratar, setContratar] = useState(false);
     React.useEffect(() => {
 
     }, [moreInfo]);
@@ -55,6 +58,16 @@ export default function RecipeReviewCard(props) {
 
         }
 
+    }
+
+    const handleContratar = () => {
+        if(contratar){
+            return <ModalContratar 
+                nombre_clase = {props.nombre_clase}
+                costo_clase = {props.costo_clase}
+                profesor = {props.profesor}
+            />
+        }
     }
 
     function getComments() {
@@ -86,6 +99,10 @@ export default function RecipeReviewCard(props) {
                 <div className="class--more-info">
                     {handleMoreInfo()}
                 </div>
+                <div className="class--contratar">
+                    {handleContratar()}
+                </div>
+
                 <CardMedia
                     component="img"
 
@@ -103,8 +120,13 @@ export default function RecipeReviewCard(props) {
                     <Typography variant="body2" color="text.secondary">
                         {props.descripcion_clase}
                     </Typography>
+                    <Button variant="contained"
+                        onClick={() => {
+                            setContratar(!contratar)
+                        }}>
+                            Contratar clase
+                    </Button>
                 </CardContent>
-
                 <CardActions disableSpacing>
 
                     <Rating/>
