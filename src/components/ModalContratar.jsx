@@ -7,6 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid'
+import Button from "@mui/material/Button";
 
 const style = {
     color: 'black',
@@ -52,6 +53,9 @@ export default function BasicModal(props) {
                             rows={4}
                             variant="standard"
                         />
+                        <Button variant="contained" color="primary" onClick={handleClose}>
+                            Contratar
+                        </Button>
                     </FormGroup>
                 </Box>
             </Modal>

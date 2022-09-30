@@ -10,6 +10,7 @@ import Register from './pages/RegisterForm';
 import Recovery from "./pages/Recovery";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import Contratadas from "./pages/Contratadas";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/home" element={<Home/>}/>
           <Route path="/register/user" element={<Register registrar="usuario"/>}/>
           <Route path="/register/class" element={<Register registrar="clase"/>}/>
+            <Route path="class/contratadas" element={<Contratadas/>}/>
           <Route path="/recovery" element={<Recovery/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>

@@ -76,6 +76,17 @@ export default function RecipeReviewCard(props) {
         })
     }
 
+    function contratarClaseButton() {
+        if (props.estado_clase === "Activa") {
+            return <Button  variant="contained"
+                    onClick={() => {
+                        setContratar(!contratar)
+                    }}>
+                Contratar clase
+            </Button>
+        }
+    }
+
     return (
         <div className="class--container">
 
@@ -120,12 +131,8 @@ export default function RecipeReviewCard(props) {
                     <Typography variant="body2" color="text.secondary">
                         {props.descripcion_clase}
                     </Typography>
-                    <Button variant="contained"
-                        onClick={() => {
-                            setContratar(!contratar)
-                        }}>
-                            Contratar clase
-                    </Button>
+                    {contratarClaseButton()}
+
                 </CardContent>
                 <CardActions disableSpacing>
 

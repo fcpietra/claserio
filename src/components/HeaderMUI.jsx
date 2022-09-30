@@ -167,6 +167,17 @@ export default function SearchAppBar() {
                             </ListItem>
                         </a>
 
+                        <a className="drawer--item" href="/class/contratadas">
+                            <ListItem key={"contratadas"} disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <SchoolIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"Clases Contratadas"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </a>
+
                         <a className="drawer--item" href="/informacion">
                             <ListItem key={"informacion"} disablePadding>
                                 <ListItemButton>
