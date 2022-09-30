@@ -156,13 +156,13 @@ export default function SearchAppBar() {
                     </DrawerHeader>
                     <Divider />
                     <List >
-                        <a className="drawer--item" href="/cursos">
-                            <ListItem key={"cursos"} disablePadding>
+                        <a className="drawer--item" href="/home">
+                            <ListItem key={"home"} disablePadding>
                                 <ListItemButton>
                                     <ListItemIcon>
                                         <SchoolIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary={"Cursos"} />
+                                    <ListItemText primary={"Home"} />
                                 </ListItemButton>
                             </ListItem>
                         </a>
@@ -182,7 +182,7 @@ export default function SearchAppBar() {
                     <Divider />
                 </Drawer>
             
-            <img className='logoMin' src="https://virtual.uade.edu.ar/portfoliovirtual/images/uade_logo.png?crc=220121814" alt="Uade Logo" />
+            <img className='logoMin' src="../img/claserio-logo.png" alt="Uade Logo" />
             
             <div class="header--searchbar">
                 <Search>

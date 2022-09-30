@@ -18,11 +18,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing/>}/>
           <Route path="/login" element={<Login/>}/>
-            <Route path="/home" element={<Home/>}/>
+          <Route path="/home" element={<Home/>}/>
           <Route path="/register/user" element={<Register registrar="usuario"/>}/>
           <Route path="/register/class" element={<Register registrar="clase"/>}/>
-
-            <Route path="/recovery" element={<Recovery/>}/>
+          <Route path="/recovery" element={<Recovery/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>
         <Footer/>
