@@ -60,7 +60,7 @@ export default function SelectEstudios() {
                 labelId="nivel-estudios"
                 id="nivel-estudios-select-standard"
                 value={type}
-                onChange={handleChangeState}
+                onChange={handleChangeType}
                 label="Type"
                 >
                 <MenuItem value="primario">Primario</MenuItem>

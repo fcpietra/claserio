@@ -60,10 +60,21 @@ export default function RegisterForm(props) {
                 required
                 fullWidth
                 id="name"
-                label="Nombre"
+                label="Título"
                 name="name"
                 autoComplete="name"
-            />
+            /><br/><br/>
+                <TextField
+                    required
+                    fullWidth
+                    type="date"
+                    id="fechaNacimiento"
+                    label="Fecha de nacimiento"
+                    name="fechaNacimiento"
+                    autoComplete="name"
+                    InputLabelProps={{shrink: true}}
+                />
+
             </Grid>
         );
     }
@@ -250,6 +261,7 @@ function setup() {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
+                                href="/home"
                             >
                                 Registrarse
                             </Button>
