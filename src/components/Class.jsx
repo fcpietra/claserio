@@ -1,158 +1,186 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Button from '@mui/material/Button'
+import {red} from '@mui/material/colors';
 import "../App.css";
 import Rating from "./Rating";
-import Comment from "./Comment";
-import Modal from "./Modal";
-import ModalContratar from "./ModalContratar";
-
-import {useState} from "react";
+import {useEffect} from "react";
+import Button from 'react-bootstrap/Button';
+import {useCookies} from "react-cookie";
 
 
-const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-}));
+export default function Class(props) {
+    const [teacherInitial, setTeacherInitial] = React.useState('');
+    const [selectedImage, setSelectedImage] = React.useState(false);
+    const [cookies] = useCookies(['token']);
 
-export default function RecipeReviewCard(props) {
-    const [expanded, setExpanded] = React.useState(false);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
-    const [moreInfo, setMoreInfo] = useState(false);
-    const [contratar, setContratar] = useState(false);
-    React.useEffect(() => {
-
-    }, [moreInfo]);
-
-    const handleMoreInfo = () => {
-        if (moreInfo) {
-            return <Modal
-                nombre_clase = {props.nombre_clase}
-                materia_clase = {props.materia_clase}
-                frecuencia_clase = {props.frecuencia_clase}
-                costo_clase = {props.costo_clase}
-            />
-        } else {
-
+    useEffect(() => {
+        console.log("Loading image");
+        let img = new Image();
+        img.onload = () => {
+            console.log("Image loaded");
+            setSelectedImage(true);
         }
+        img.onerror = () => {
+            console.log("Image not loaded");
+            setSelectedImage(false)
+        }
+        img.src = props.image;
+    }, [props.image]);
 
+
+    useEffect(() => {
+        const options = {method: 'GET', headers: {'Content-Type': 'application/json'}};
+
+        fetch('http://localhost:8000/api/v1/teachers/' + props.teacherId, options)
+            .then(response => response.json())
+            .then(response =>  setTeacherInitial(response.data.lastName.charAt(0)))
+            .catch(err => console.error(err));
+    }, []);
+
+    function selectClass() {
+        console.log("Class id: " + JSON.stringify(props))
+
+        sessionStorage.setItem('classId', props.id);
+        window.location.href = '/class';
     }
 
-    const handleContratar = () => {
-        if(contratar){
-            return <ModalContratar 
-                nombre_clase = {props.nombre_clase}
-                costo_clase = {props.costo_clase}
-                profesor = {props.profesor}
-            />
-        }
-    }
+    const commentClass = () => {
+        let comment = document.getElementById("comment-text").value;
+        let rating = document.getElementById("rating").value;
 
-    function getComments() {
-        return props.comentarios_clase.map((comentario) => {
-            return <Comment autor={comentario.alumno_id} comentario={comentario.comentario} />
-        })
-    }
+        const body = JSON.stringify({
+            "classId": props.id,
+            "comment": comment,
+            "rank": rating
+        });
 
-    function contratarClaseButton() {
-        if (props.estado_clase === "Activa") {
-            return <Button  variant="contained"
-                    onClick={() => {
-                        setContratar(!contratar)
-                    }}>
-                Contratar clase
-            </Button>
-        }
+        const options = {
+            method: 'POST',
+            headers: {
+                Authorization: cookies.token,
+                'Content-Type': 'application/json'
+            },
+            body: body
+        };
+
+        fetch('http://localhost:8000/api/v1/comment', options)
+            .then(response => response.json())
+            .then(response => {
+                alert("Comment added successfully");
+                window.location.href = '/home';
+            })
+            .catch(err => console.error(err));
+
     }
 
     return (
         <div className="class--container">
+            {props.clickable ? (
+                <a className="class--container--clickable" onClick={selectClass}>
+                    <Card className="class--card">
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                    {teacherInitial}
+                                </Avatar>
+                            }
 
-            <Card className="class--card">
-                <CardHeader
-                    avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                            R
-                        </Avatar>
-                    }
-                    action={
-                        <div onClick={() => setMoreInfo(!moreInfo)}>
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
+                            title={props.name}
+                            subheader={props.date}
+                        />
+
+                        <CardMedia
+                            component="img"
+                            image={
+                                (selectedImage ? props.image : "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png")
+                            }
+                            alt={props.name + " image"}
+                        />
+
+                        <div className="corners--image">
+                            <h5 className="left--image">{props.duration} hs</h5>
+                            <h5 className="right--image">{props.type}</h5>
                         </div>
-                    }
-                    title={props.nombre_clase}
-                    subheader={props.fecha_clase}
-                />
-                <div className="class--more-info">
-                    {handleMoreInfo()}
-                </div>
-                <div className="class--contratar">
-                    {handleContratar()}
-                </div>
+                        <div className="class--more-info">
+                        </div>
+                        <CardContent>
+                            <Typography variant="body2" color="text.secondary">
+                                {props.description}
+                            </Typography>
+                        </CardContent>
+                        {props.rateable ? (
+                            <Rating/>
+                        ) : undefined}
+                    </Card>
+                </a>
+            ) : (
+                <Card className="class--card">
+                    <CardHeader
+                        avatar={
+                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                {teacherInitial}
+                            </Avatar>
+                        }
 
-                <CardMedia
-                    component="img"
+                        title={props.name}
+                        subheader={props.date}
+                    />
 
-                    image={props.imagen_clase}
-                    alt={props.nombre_clase + " image"}
-                />
+                    <CardMedia
+                        component="img"
+                        image={
+                            (selectedImage ? props.image : "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png")
+                        }
+                        alt={props.name + " image"}
+                    />
 
-                <div className="corners--image">
-                    <h5 className="left--image">{props.duracion_clase} min</h5>
-                    <h5 className="right--image">{props.tipo_clase}</h5>
-                </div>
-                <div className="class--more-info">
-                </div>
-                <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                        {props.descripcion_clase}
-                    </Typography>
-                    {contratarClaseButton()}
-
-                </CardContent>
-                <CardActions disableSpacing>
-
-                    <Rating/>
-                    <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
-                        aria-label="show more"
-                    >
-                        <ExpandMoreIcon />
-                    </ExpandMore>
-                </CardActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <div className="corners--image">
+                        <h5 className="left--image">{props.duration} hs</h5>
+                        <h5 className="right--image">{props.type}</h5>
+                    </div>
+                    <div className="class--more-info">
+                    </div>
                     <CardContent>
-                        <h2>Comentarios</h2>
-                        {getComments()}
+                        <Typography variant="body2" color="text.secondary">
+                            {props.description}
+                        </Typography>
                     </CardContent>
-                </Collapse>
-            </Card>
+                    {
+                        props.rateable ? (
+                            <Rating/>
+                        ) : undefined
+                    }
+
+                    {props.commentable ? (
+                        <div>
+                            <label htmlFor="comment-text">Rate: </label>
+                            <input type="number" id="rating" min="1" max="5"/>
+                            <br/><br/>
+                            <input id="comment-text" type="text" placeholder="Comment"/>
+                        </div>
+                    ) : undefined}
+                    <br/><br/>
+                    {props.commentable ? (
+                        <div className="comment--rating">
+
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                onClick={commentClass}
+                                className="comment--btn"
+                            >
+                                Leave Comment
+                            </Button>
+                        </div>
+                    ) : undefined}
+                </Card>
+            )}
         </div>
     );
 }
+

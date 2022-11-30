@@ -1,32 +1,37 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom';
-
-import Footer from './components/Footer';
-import HeaderMUI from './components/HeaderMUI';
 import './App.css';
 import Landing from './pages/Landing';
-import Login from './pages/Login';
 import Register from './pages/RegisterForm';
 import Recovery from "./pages/Recovery";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
-import Contratadas from "./pages/Contratadas";
+import PendingClasses from "./pages/PendingClasses";
+import SingIn from "./pages/SingIn";
+import SingUp from "./pages/SingUp";
+import ClassInfo from "./pages/ClassInfo";
+import Contract from "./pages/Contract";
+import CurrentClasses from "./pages/CurrentClasses";
 
 function App() {
   return (
       <div className="App">
-        <HeaderMUI/>
         <Routes>
-          <Route path="/" element={<Landing/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/home" element={<Home/>}/>
-          <Route path="/register/user" element={<Register registrar="usuario"/>}/>
-          <Route path="/register/class" element={<Register registrar="clase"/>}/>
-            <Route path="class/contratadas" element={<Contratadas/>}/>
-          <Route path="/recovery" element={<Recovery/>}/>
-          <Route path="*" element={<NotFound/>}/>
+            <Route path="/" element={<Landing/>}/>
+            <Route path="/home" element={<Home/>}/>
+
+            <Route path="/login" element={<SingIn/>}/>
+            <Route path="/register/user" element={<SingUp/>}/>
+
+            <Route path="/contract" element={<Contract/>}/>
+            <Route path="/register/class" element={<Register registrar="clase"/>}/>
+            <Route path="class/pending" element={<PendingClasses/>}/>
+            <Route path="class/approved" element={<CurrentClasses/>}/>
+            <Route path="/class" element={<ClassInfo/>}/>
+            <Route path="/profile" element={<Recovery/>}/>
+            <Route path="/recovery" element={<Recovery/>}/>
+            <Route path="*" element={<NotFound/>}/>
         </Routes>
-        <Footer/>
       </div>
   );
 }

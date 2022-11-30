@@ -19,6 +19,8 @@ import Drawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import SchoolIcon from '@mui/icons-material/School';
 import InfoIcon from '@mui/icons-material/Info';
+import LogoutIcon from '@mui/icons-material/Logout';
+import {useCookies} from "react-cookie";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -110,6 +112,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
+
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -121,7 +125,12 @@ export default function SearchAppBar() {
         setOpen(false);
     };
 
-  return (
+    function logOut() {
+        removeCookie('token');
+        window.location.href = '/login';
+    }
+
+    return (
     <div >
         <Box sx={{ flexGrow: 1 }}>
         <AppBar  position="static">
@@ -167,13 +176,24 @@ export default function SearchAppBar() {
                             </ListItem>
                         </a>
 
-                        <a className="drawer--item" href="/class/contratadas">
-                            <ListItem key={"contratadas"} disablePadding>
+                        <a className="drawer--item" href="/class/approved">
+                            <ListItem key={"approved"} disablePadding>
                                 <ListItemButton>
                                     <ListItemIcon>
                                         <SchoolIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary={"Clases Contratadas"} />
+                                    <ListItemText primary={"Current Classes"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </a>
+
+                        <a className="drawer--item" href="/class/pending">
+                            <ListItem key={"pending"} disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <SchoolIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"Pending Classes"} />
                                 </ListItemButton>
                             </ListItem>
                         </a>
@@ -185,6 +205,17 @@ export default function SearchAppBar() {
                                         <InfoIcon />
                                     </ListItemIcon>
                                     <ListItemText primary={"Información"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </a>
+
+                        <a className="drawer--item" onClick={logOut}>
+                            <ListItem key={"logOut"} disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <LogoutIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"Log Out"} />
                                 </ListItemButton>
                             </ListItem>
                         </a>

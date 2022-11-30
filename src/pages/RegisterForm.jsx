@@ -41,7 +41,7 @@ export default function RegisterForm(props) {
                     required
                     fullWidth
                     type="date"
-                    id="fechaNacimiento"
+                    id="birthday"
                     label="Fecha de nacimiento"
                     name="fechaNacimiento"
                     autoComplete="name"
@@ -50,7 +50,6 @@ export default function RegisterForm(props) {
             </Grid>
                 <Select  />
             </>
-
         );
     }
     else if (alignment === 'docente') {
@@ -68,7 +67,7 @@ export default function RegisterForm(props) {
                     required
                     fullWidth
                     type="date"
-                    id="fechaNacimiento"
+                    id="birthday"
                     label="Fecha de nacimiento"
                     name="fechaNacimiento"
                     autoComplete="name"
@@ -194,7 +193,7 @@ function setup() {
                                         name="nombre"
                                         required
                                         fullWidth
-                                        id="nombre"
+                                        id="first_name"
                                         label="Nombre"
                                         autoFocus
                                     />
@@ -203,7 +202,7 @@ function setup() {
                                     <TextField
                                         required
                                         fullWidth
-                                        id="apellido"
+                                        id="last_name"
                                         label="Apellido"
                                         name="apellido"
                                         autoComplete="family-name"
@@ -223,7 +222,7 @@ function setup() {
                                     <TextField
                                         required
                                         fullWidth
-                                        id="telefono"
+                                        id="phone"
                                         label="Teléfono"
                                         name="telefono"
                                         autoComplete="email"
@@ -256,12 +255,26 @@ function setup() {
                                 </Grid>
                                 {generateInput()}
                             </Grid>
+                            <script src="../endpoints/student.js" type="text/javascript" />
                             <Button
                                 type="submit"
+                                //firstName, lastName, birthday, email, phone, education, password
+                                onClick={ () => (
+                                    createStudent(
+                                        document.getElementById("first_name").value,
+                                        document.getElementById("last_name").value,
+                                        document.getElementById("birthday").value,
+                                        document.getElementById("email").value,
+                                        document.getElementById("phone").value,
+                                        'Universidad',
+                                        document.getElementById("password").value
+                                        )
+                                )
+                                }
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
-                                href="/home"
+
                             >
                                 Registrarse
                             </Button>
