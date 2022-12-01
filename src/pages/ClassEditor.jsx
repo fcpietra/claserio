@@ -90,7 +90,7 @@ export default function ClassInfo(){
             body: JSON.stringify(newClass)
         };
 
-        return fetch('http://localhost:8000/api/v1/class', options)
+        return fetch('http://localhost:8000/api/v1/class/' + sessionStorage.getItem("classId"), options)
             .then(response => response.json())
             .then(response => {
                 alert('Class created successfully');
@@ -230,7 +230,7 @@ export default function ClassInfo(){
                                     required
                                     fullWidth
                                     id="image"
-                                    value={classInfo.image}
+                                    defaultValue={classInfo.image}
                                 />
                             </Grid>
                             <Grid item xs={6}>

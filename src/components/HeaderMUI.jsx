@@ -21,6 +21,11 @@ import SchoolIcon from '@mui/icons-material/School';
 import InfoIcon from '@mui/icons-material/Info';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {useCookies} from "react-cookie";
+import AnnouncementIcon from '@mui/icons-material/Announcement';
+import ClassIcon from '@mui/icons-material/Class';
+import HomeIcon from '@mui/icons-material/Home';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -169,34 +174,88 @@ export default function SearchAppBar() {
                             <ListItem key={"home"} disablePadding>
                                 <ListItemButton>
                                     <ListItemIcon>
-                                        <SchoolIcon />
+                                        <HomeIcon />
                                     </ListItemIcon>
                                     <ListItemText primary={"Home"} />
                                 </ListItemButton>
                             </ListItem>
                         </a>
 
-                        <a className="drawer--item" href="/class/approved">
-                            <ListItem key={"approved"} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <SchoolIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary={"Current Classes"} />
-                                </ListItemButton>
-                            </ListItem>
-                        </a>
+                        {
+                            sessionStorage.getItem("role") === "teacher"
+                            ?
+                                <div>
 
-                        <a className="drawer--item" href="/class/pending">
-                            <ListItem key={"pending"} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <SchoolIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary={"Pending Classes"} />
-                                </ListItemButton>
-                            </ListItem>
-                        </a>
+                                    <a className="drawer--item" href="/class/approved">
+                                        <ListItem key={"approved"} disablePadding>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <RemoveRedEyeIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary={"Current Classes"} />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    </a>
+
+                                    <a className="drawer--item" href="/class/pending">
+                                        <ListItem key={"pending"} disablePadding>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <VisibilityOffIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary={"Hidden Classes"} />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    </a>
+
+                                    <a className="drawer--item" href="/comments">
+                                        <ListItem key={"comments"} disablePadding>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <AnnouncementIcon/>
+                                                </ListItemIcon>
+                                                <ListItemText primary={"Pending Comments"} />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    </a>
+
+                                    <a className="drawer--item" href="/requests">
+                                        <ListItem key={"requests"} disablePadding>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <ClassIcon/>
+                                                </ListItemIcon>
+                                                <ListItemText primary={"Classes Requested"} />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    </a>
+
+                                </div>
+                                :
+                                <div>
+                                    <a className="drawer--item" href="/class/approved">
+                                        <ListItem key={"approved"} disablePadding>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <SchoolIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary={"Current Classes"} />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    </a>
+
+                                    <a className="drawer--item" href="/class/pending">
+                                        <ListItem key={"pending"} disablePadding>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <SchoolIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary={"Pending Classes"} />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    </a>
+                                </div>
+                        }
 
                         <a className="drawer--item" href="/informacion">
                             <ListItem key={"informacion"} disablePadding>
@@ -225,18 +284,7 @@ export default function SearchAppBar() {
                 </Drawer>
             
             <img className='logoMin' src="../img/claserio-logo.png" alt="Uade Logo" />
-            
-            <div class="header--searchbar">
-                <Search>
-                    <SearchIconWrapper>
-                    <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                    placeholder="Search a Course…"
-                    inputProps={{ 'aria-label': 'search' }}
-                    />
-                </Search>
-            </div>
+
             </Toolbar>
         </AppBar>
         </Box>

@@ -13,6 +13,8 @@ import ClassInfo from "./pages/ClassInfo";
 import Contract from "./pages/Contract";
 import CurrentClasses from "./pages/CurrentClasses";
 import ClassEditor from "./pages/ClassEditor";
+import RequestedComments from "./pages/RequestedComments";
+import RequestedClasses from "./pages/RequestedClasses";
 
 function App() {
   return (
@@ -25,6 +27,10 @@ function App() {
             <Route path="/register/user" element={<SingUp/>}/>
             <Route path="/class/edit" element={<ClassEditor/>}/>
             <Route path="/contract" element={<Contract/>}/>
+
+            <Route path="/comments" element={<RequestedComments/>}/>
+            <Route path="/requests" element={<RequestedClasses/>}/>
+
             <Route path="/register/class" element={<Register registrar="clase"/>}/>
             <Route path="class/pending" element={<PendingClasses/>}/>
             <Route path="class/approved" element={<CurrentClasses/>}/>

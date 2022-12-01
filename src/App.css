@@ -269,3 +269,35 @@ body{
     transition: 0.5s;
     cursor: pointer;
 }
+
+.request-comments--container{
+    text-align: center;
+
+}
+
+.request-comments--container p {
+    font-size: 1.5rem;
+}
+
+.request-comments--container button{
+    background-color: #14222A;
+    font-size: 1rem;
+    color: #ffffff;
+    padding: 10px;
+    margin-right: 1%;
+    margin-left: 1%;
+    margin-bottom: 50px;
+    border-style: solid;
+    border-color: #ffffff;
+    border-width: 1px;
+    border-radius: 10px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.request-comments--container button:hover{
+    background-color: #ffffff;
+    font-size: 1rem;
+    padding: 10px;
+    color: #14222A;
+}
