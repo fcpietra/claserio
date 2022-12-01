@@ -60,8 +60,6 @@ export default function Contract() {
                                         sessionStorage.removeItem("classId");
                                         sessionStorage.removeItem("className");
                                         sessionStorage.removeItem("classPrice");
-                                        //window.location.href = "/class/contratadas";
-
                                     }
                                     }
                                 >Contract</a>

@@ -2,7 +2,7 @@ import React from 'react';
 import {Route, Routes} from 'react-router-dom';
 import './App.css';
 import Landing from './pages/Landing';
-import Register from './pages/RegisterForm';
+import Register from './pages/ClassRegister';
 import Recovery from "./pages/Recovery";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -12,6 +12,7 @@ import SingUp from "./pages/SingUp";
 import ClassInfo from "./pages/ClassInfo";
 import Contract from "./pages/Contract";
 import CurrentClasses from "./pages/CurrentClasses";
+import ClassEditor from "./pages/ClassEditor";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
 
             <Route path="/login" element={<SingIn/>}/>
             <Route path="/register/user" element={<SingUp/>}/>
-
+            <Route path="/class/edit" element={<ClassEditor/>}/>
             <Route path="/contract" element={<Contract/>}/>
             <Route path="/register/class" element={<Register registrar="clase"/>}/>
             <Route path="class/pending" element={<PendingClasses/>}/>

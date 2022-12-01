@@ -4,6 +4,7 @@ import ClassFULL from '../components/ClassFULL'
 
 export default function ClassInfo(){
     const [classInfo, setClassInfo] = useState([]);
+
     useEffect(() => {
         let id = sessionStorage.getItem("classId");
 
@@ -18,18 +19,17 @@ export default function ClassInfo(){
         <div className="main-content-container">
             {
                 <ClassFULL isContratable={true}>
-                    id={classInfo._id}
-                    name={classInfo.name}
-                    description={classInfo.description}
-                    duration={classInfo.duration}
-                    type={classInfo.type}
-                    image={classInfo.image}
-                    frequency={classInfo.frequency}
-                    subject={classInfo.subject}
-                    price={classInfo.price}
-                    rank={classInfo.rank}
-                    comments={"sdad"}
-                    teacherId={classInfo.teacherId}
+                    {/*id={classInfo._id}*/}
+                    {/*name={classInfo.name}*/}
+                    {/*description={classInfo.description}*/}
+                    {/*duration={classInfo.duration}*/}
+                    {/*type={classInfo.type}*/}
+                    {/*image={classInfo.image}*/}
+                    {/*frequency={classInfo.frequency}*/}
+                    {/*subject={classInfo.subject}*/}
+                    {/*price={classInfo.price}*/}
+                    {/*rank={classInfo.rank}*/}
+                    {/*teacherId={classInfo.teacherId}*/}
                 </ClassFULL>
             }
         </div>

@@ -6,10 +6,11 @@ import Button from '@mui/joy/Button';
 import Card from '@mui/joy/Card';
 import IconButton from '@mui/joy/IconButton';
 import Typography from '@mui/joy/Typography';
-import BookmarkAdd from '@mui/icons-material/BookmarkAddOutlined';
 import HeaderMUI from "./HeaderMUI";
 import Footer from "./Footer";
 import {useEffect, useState} from "react";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export default function ClassFULL(props) {
     const [selectedClass, setSelectedClass] = useState([])
@@ -17,24 +18,13 @@ export default function ClassFULL(props) {
     const [classComments, setClassComments] = useState([])
 
     useEffect(() => {
-        const options = {method: 'GET', headers: {'Content-Type': 'application/json'}};
-
-        fetch('http://localhost:8000/api/v1/teachers/' + selectedClass.teacherId, options)
-            .then(response => response.json())
-            .then(response => setClassTeacher(response.data.lastName + " " + response.data.firstName))
-            .catch(err => console.error(err));
-    }, []);
-
-
-    useEffect(() => {
         const id = sessionStorage.getItem("classId");
-
         const options = {method: 'GET', headers: {'Content-Type': 'application/json'}};
 
         fetch('http://localhost:8000/api/v1/class/' + id, options)
             .then(response => response.json())
             .then(response => {
-                setSelectedClass(response)
+                setSelectedClass(response.data)
             })
             .catch(err => console.error(err));
     }, []);
@@ -49,6 +39,23 @@ export default function ClassFULL(props) {
             .catch(err => console.error(err));
 
     }, []);
+
+
+    useEffect(() => {
+        const options = {method: 'GET', headers: {'Content-Type': 'application/json'}};
+
+        fetch('http://localhost:8000/api/v1/teachers/' + selectedClass.teacherId, options)
+            .then(response => response.json())
+            .then(response => setClassTeacher(response.data.lastName + " " + response.data.firstName))
+            .catch(err => console.error(err));
+    }, []);
+
+    function getVisibility() {
+        if (selectedClass.state) {
+            return <VisibilityIcon/>
+        }
+        return <VisibilityOffIcon/>
+    }
 
     return(
         <>
@@ -68,7 +75,7 @@ export default function ClassFULL(props) {
                         size="sm"
                         sx={{ position: 'absolute', top: '0.5rem', right: '0.5rem' }}
                     >
-                        <BookmarkAdd />
+                        {props.isContratable ? null: getVisibility()}
                     </IconButton>
                     <AspectRatio minHeight="120px" maxHeight="200px" sx={{ my: 2 }}>
                         <img
@@ -103,36 +110,38 @@ export default function ClassFULL(props) {
                     </Box>
                     <p>Rating: {selectedClass.rank}</p>
                     {props.isContratable === true ?
-                        <Button
-                            onClick={() => {
-                                sessionStorage.setItem("classId", selectedClass._id);
-                                sessionStorage.setItem("classPrice", selectedClass.price);
-                                sessionStorage.setItem("classTeacherId", selectedClass.teacherId);
-                                sessionStorage.setItem("className", selectedClass.name);
-                                window.location.href = "/contract";
-                                }
-                            }
-                            variant="solid"
-                            size="sm"
-                            color="primary"
-                            aria-label="Explore Bahamas Islands"
-                            style={{backgroundColor: "#3f51b5", color: "white"}}
-                            sx={{ ml: 'auto', fontWeight: 600 }}
-                        >
-                            Contract
-                        </Button>
-                    : null}
-
-                    <br/>
-                    <h2>Comments</h2>
-                    {classComments.map((c) => (
                         <div>
-                            <hr/>
-                            <p>{c.comment}</p>
-                            <p>Rating: {c.rank}</p>
-                            <hr/>
+                            <Button
+                                onClick={() => {
+                                    sessionStorage.setItem("classId", selectedClass._id);
+                                    sessionStorage.setItem("classPrice", selectedClass.price);
+                                    sessionStorage.setItem("classTeacherId", selectedClass.teacherId);
+                                    sessionStorage.setItem("className", selectedClass.name);
+                                    window.location.href = "/contract";
+                                    }
+                                }
+                                variant="solid"
+                                size="sm"
+                                color="primary"
+                                aria-label="Explore Bahamas Islands"
+                                style={{backgroundColor: "#3f51b5", color: "white"}}
+                                sx={{ ml: 'auto', fontWeight: 600 }}
+                            >
+                                Contract
+                            </Button>
+
+                            <br/>
+                            <h2>Comments</h2>
+                            {classComments.map((c) => (
+                                <div>
+                                    <hr/>
+                                    <p>{c.comment}</p>
+                                    <p>Rating: {c.rank}</p>
+                                    <hr/>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    : null}
             </Card>
         </div>
         <Footer/>

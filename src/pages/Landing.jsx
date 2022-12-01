@@ -7,8 +7,6 @@ import {useCookies} from "react-cookie";
 export default function Landing() {
     const [cookies] = useCookies(['token']);
 
-    const [logged, setLogged] = useState(false);
-
     useEffect(() => {
         const options = {
             method: 'GET',
@@ -22,7 +20,7 @@ export default function Landing() {
             .then(response => response.json())
             .then(response => {
                 console.log(response);
-                setLogged(response);
+
 
             })
             .catch(err => console.error(err));

@@ -18,38 +18,76 @@ export default function PendingClasses(){
             }
         };
 
-        fetch('http://localhost:8000/api/v1//class/student/reserve', options)
-            .then(response => response.json())
-            .then(response => setClasses(response.data))
-            .catch(err => console.error(err));
+        if ( sessionStorage.getItem("role") === "student" ){
+            fetch('http://localhost:8000/api/v1//class/student/reserve', options)
+                .then(response => response.json())
+                .then(response => setClasses(response.data))
+                .catch(err => console.error(err));
+
+        } else if ( sessionStorage.getItem("role") === "teacher" ){
+            fetch('http://localhost:8000/api/v1/class/teacher/state/unpublished', options)
+                .then(response => response.json())
+                .then(response => setClasses(response.data))
+                .catch(err => console.error(err));
+        } else {
+            window.location.href = "/XD";
+        }
     }, []);
 
 
     return (
         <>
             <HeaderMUI/>
-            <div className="main-content-container">
-                <h1>Pending Classes</h1>
-                {classes.map((item) => (
-                    <Class
-                        rateable={false}
-                        clickable={false}
-                        commentable={false}
-                        id={item._id}
-                        name={item.name}
-                        description={item.description}
-                        duration={item.duration}
-                        type={item.type}
-                        image={item.image}
-                        frequency={item.frequency}
-                        subject={item.subject}
-                        price={item.price}
-                        rank={item.rank}
-                        comments={item.comments}
-                        teacherId={item.teacherId}
-                    />
-                ))}
-            </div>
+            {
+                (sessionStorage.getItem("role") === "student") ?
+                    <div className="main-content-container">
+                        <h1>Pending Classes</h1>
+                        {classes.map((item) => (
+                            <Class
+                                rateable={false}
+                                clickable={false}
+                                commentable={false}
+                                id={item._id}
+                                name={item.name}
+                                description={item.description}
+                                duration={item.duration}
+                                type={item.type}
+                                image={item.image}
+                                frequency={item.frequency}
+                                subject={item.subject}
+                                price={item.price}
+                                rank={item.rank}
+                                comments={item.comments}
+                                teacherId={item.teacherId}
+                            />
+                        ))}
+                    </div>
+                    :
+                    <div className="main-content-container">
+                        <h1>Hidden Classes</h1>
+                        {classes.map((item) => (
+                            <Class
+                                rateable={false}
+                                clickable={false}
+                                commentable={false}
+                                editable={true}
+                                id={item._id}
+                                name={item.name}
+                                description={item.description}
+                                duration={item.duration}
+                                type={item.type}
+                                image={item.image}
+                                frequency={item.frequency}
+                                subject={item.subject}
+                                price={item.price}
+                                rank={item.rank}
+                                comments={item.comments}
+                                teacherId={item.teacherId}
+                            />
+                        ))}
+                    </div>
+            }
+
             <Footer/>
         </>
 

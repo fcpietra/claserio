@@ -26,8 +26,6 @@ export default function PendingClasses(){
             }
         };
 
-        let identifier = "";
-
         if (sessionStorage.getItem("role") === "student") {
             fetch('http://localhost:8000/api/v1/class/student/reserve/approved', options)
                 .then(response => response.json())
@@ -35,36 +33,63 @@ export default function PendingClasses(){
                 .catch(err => console.error(err));
             }
         else if (sessionStorage.getItem("role") === "teacher") {
-            // TODO
-            console.log("Otro endpoint")
+            fetch('http://localhost:8000/api/v1/class/teacher/state/published', options)
+                .then(response => response.json())
+                .then(response => setClasses(response.data))
+                .catch(err => console.error(err));
         }
     }, []);
 
     return (
         <>
             <HeaderMUI/>
-            <div className="main-content-container">
-                <h1>Current Classes</h1>
-                {classes.map((item) => (
-                    <Class
-                        rateable={false}
-                        clickable={false}
-                        commentable={commentable}
-                        id={item._id}
-                        name={item.name}
-                        description={item.description}
-                        duration={item.duration}
-                        type={item.type}
-                        image={item.image}
-                        frequency={item.frequency}
-                        subject={item.subject}
-                        price={item.price}
-                        rank={item.rank}
-                        comments={item.comments}
-                        teacherId={item.teacherId}
-                    />
-                ))}
-            </div>
+            {sessionStorage.getItem("role") === "student" ?
+                <div className="main-content-container">
+                    <h1>Current Classes</h1>
+                    {classes.map((item) => (
+                        <Class
+                            rateable={false}
+                            clickable={false}
+                            commentable={commentable}
+                            id={item._id}
+                            name={item.name}
+                            description={item.description}
+                            duration={item.duration}
+                            type={item.type}
+                            image={item.image}
+                            frequency={item.frequency}
+                            subject={item.subject}
+                            price={item.price}
+                            rank={item.rank}
+                            comments={item.comments}
+                            teacherId={item.teacherId}
+                        />
+                    ))}
+                </div>:
+                <div className="main-content-container">
+                    <h1>Current Classes</h1>
+                    {classes.map((item) => (
+                        <Class
+                            rateable={false}
+                            clickable={false}
+                            editable={true}
+                            commentable={commentable}
+                            id={item._id}
+                            name={item.name}
+                            description={item.description}
+                            duration={item.duration}
+                            type={item.type}
+                            image={item.image}
+                            frequency={item.frequency}
+                            subject={item.subject}
+                            price={item.price}
+                            rank={item.rank}
+                            comments={item.comments}
+                            teacherId={item.teacherId}
+                        />
+                    ))}
+                </div>
+            }
             <Footer/>
         </>
 

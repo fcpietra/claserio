@@ -50,8 +50,9 @@ export default function Class(props) {
     }
 
     const commentClass = () => {
-        let comment = document.getElementById("comment-text").value;
-        let rating = document.getElementById("rating").value;
+        let comment = document.getElementById(props.id + "-comment").value;
+        let rating = parseInt(document.getElementById(props.id + "-rate").value);
+
 
         const body = JSON.stringify({
             "classId": props.id,
@@ -68,14 +69,24 @@ export default function Class(props) {
             body: body
         };
 
+        if (comment === "" || rating === "") {
+            alert("Fill all fields");
+            window.location.reload();
+        }
+
         fetch('http://localhost:8000/api/v1/comment', options)
             .then(response => response.json())
             .then(response => {
-                alert("Comment added successfully");
+                alert(JSON.stringify(response))
                 window.location.href = '/home';
             })
             .catch(err => console.error(err));
 
+    }
+
+    function editClass() {
+        sessionStorage.setItem('classId', props.id);
+        window.location.href = '/class/edit';
     }
 
     return (
@@ -126,11 +137,9 @@ export default function Class(props) {
                                 {teacherInitial}
                             </Avatar>
                         }
-
                         title={props.name}
                         subheader={props.date}
                     />
-
                     <CardMedia
                         component="img"
                         image={
@@ -151,31 +160,37 @@ export default function Class(props) {
                         </Typography>
                     </CardContent>
                     {
+                        // FIXME
                         props.rateable ? (
                             <Rating/>
                         ) : undefined
                     }
-
-                    {props.commentable ? (
-                        <div>
-                            <label htmlFor="comment-text">Rate: </label>
-                            <input type="number" id="rating" min="1" max="5"/>
-                            <br/><br/>
-                            <input id="comment-text" type="text" placeholder="Comment"/>
+                    {props.editable ? (
+                        <div className="class--buttons">
+                            <Button className="login--button" variant="primary" onClick={editClass}>Edit class</Button>
                         </div>
                     ) : undefined}
+
                     <br/><br/>
                     {props.commentable ? (
-                        <div className="comment--rating">
-
-                            <Button
-                                variant="primary"
-                                type="submit"
-                                onClick={commentClass}
-                                className="comment--btn"
-                            >
-                                Leave Comment
-                            </Button>
+                        <div>
+                            <div>
+                                <label htmlFor="comment-text">Rate: </label>
+                                <input type="number" id={props.id + "-rate"} min="1" max="5"/>
+                                <br/><br/>
+                                <input id={props.id + "-comment"} type="text" placeholder="Comment"/>
+                            </div>
+                            <br/><br/>
+                            <div className="comment--rating">
+                                <Button
+                                    variant="primary"
+                                    type="submit"
+                                    onClick={commentClass}
+                                    className="comment--btn"
+                                >
+                                    Leave Comment
+                                </Button>
+                            </div>
                         </div>
                     ) : undefined}
                 </Card>
