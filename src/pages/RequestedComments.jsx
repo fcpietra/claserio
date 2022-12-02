@@ -43,8 +43,14 @@ export default function RequestedComments() {
 
     function rejectComment(id) {
         const body = {
-            state: 'blocked'
+            state: 'blocked',
+            reason: prompt('Please enter the reason for rejecting the comment')
         };
+
+        if (body.reason === null || body.reason === '') {
+            alert('Please enter a reason for rejecting the comment');
+            return;
+        }
         const options = {
             method: 'PUT',
             headers: {
@@ -53,7 +59,7 @@ export default function RequestedComments() {
             body: JSON.stringify(body)
         };
 
-        fetch('http://localhost:8000/api/v1/comment/' + id, options)
+        fetch('http://localhost:8000/api/v1/comment/reject/' + id, options)
             .then(response => response.json())
             .then(response => window.location.reload())
             .catch(err => console.error(err));
@@ -62,6 +68,9 @@ export default function RequestedComments() {
     return(
         <>
             <HeaderMUI/>
+            <div className="main-content-container">
+                <h1>Requested Comments</h1>
+            </div>
             {comments.map((c) => (
                 <div className="request-comments--container">
                     <hr/>

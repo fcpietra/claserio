@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "../App.css";
 import Class from "../components/Class";
 import HeaderMUI from "../components/HeaderMUI";
@@ -10,7 +10,7 @@ export default function Home() {
     const [classes, setClasses] = React.useState([]);
     const [cookies] = useCookies(['token']);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!cookies.token) {
             window.location.href = "/login";
         }
@@ -18,7 +18,7 @@ export default function Home() {
         let url = "http://localhost:8000/api/v1/class/student/not-reserve";
 
         if (sessionStorage.getItem("role") === "teacher") {
-            url += "teacher";
+            return;
         }
 
         const options = {method: 'GET', headers: {'Content-Type': 'application/json',

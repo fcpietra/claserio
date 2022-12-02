@@ -15,6 +15,7 @@ import CurrentClasses from "./pages/CurrentClasses";
 import ClassEditor from "./pages/ClassEditor";
 import RequestedComments from "./pages/RequestedComments";
 import RequestedClasses from "./pages/RequestedClasses";
+import AcceptedClasses from "./pages/AcceptedClasses";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
 
             <Route path="/comments" element={<RequestedComments/>}/>
             <Route path="/requests" element={<RequestedClasses/>}/>
+            <Route path="/accepted" element={<AcceptedClasses/>}/>
 
             <Route path="/register/class" element={<Register registrar="clase"/>}/>
             <Route path="class/pending" element={<PendingClasses/>}/>

@@ -12,8 +12,16 @@ export default function Recovery(){
     const createVerificationCode = () => {
         let email = document.getElementById("email").value;
         alert("Sending verification code to " + email);
-
+        localStorage.setItem("email", email);
         setCodeSent(true);
+    }
+
+    function sendCode(){
+        let code = document.getElementById("code").value;
+        let email = localStorage.getItem("email");
+
+
+
     }
 
     const sendVerificationCode = () => {
@@ -25,6 +33,7 @@ export default function Recovery(){
             alert("Passwords do not match");
             return;
         }
+
         setCodeValidated(true);
 
         alert("Password changed successfully");
@@ -38,10 +47,11 @@ export default function Recovery(){
             {
                 codeSent ? (
                     <form>
+                        <h4>Paste verification code and set the new password</h4>
                         <input type="text" id="code" name="code" placeholder="Verification Code here!"/><br></br><br/>
 
                         <input type="password" id="password" name="password"  placeholder="New Password here!"/><br></br><br/>
-                        <input type="password" id="password2" name="password"  placeholder="Confirm Password here!"/><br></br><br/>
+                        <input type="password" id="password2" name="password2"  placeholder="Confirm Password here!"/><br></br><br/>
 
                         <a className="login--button" onClick={sendVerificationCode}>Validate Verification Code</a><br/><br/>
                     </form>

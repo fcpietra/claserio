@@ -26,6 +26,7 @@ import ClassIcon from '@mui/icons-material/Class';
 import HomeIcon from '@mui/icons-material/Home';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -208,13 +209,13 @@ export default function SearchAppBar() {
                                         </ListItem>
                                     </a>
 
-                                    <a className="drawer--item" href="/comments">
-                                        <ListItem key={"comments"} disablePadding>
+                                    <a className="drawer--item" href="/accepted">
+                                        <ListItem key={"accepted"} disablePadding>
                                             <ListItemButton>
                                                 <ListItemIcon>
-                                                    <AnnouncementIcon/>
+                                                    <CheckBoxIcon/>
                                                 </ListItemIcon>
-                                                <ListItemText primary={"Pending Comments"} />
+                                                <ListItemText primary={"Classes Accepted"} />
                                             </ListItemButton>
                                         </ListItem>
                                     </a>
@@ -226,6 +227,17 @@ export default function SearchAppBar() {
                                                     <ClassIcon/>
                                                 </ListItemIcon>
                                                 <ListItemText primary={"Classes Requested"} />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    </a>
+
+                                    <a className="drawer--item" href="/comments">
+                                        <ListItem key={"comments"} disablePadding>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <AnnouncementIcon/>
+                                                </ListItemIcon>
+                                                <ListItemText primary={"Pending Comments"} />
                                             </ListItemButton>
                                         </ListItem>
                                     </a>

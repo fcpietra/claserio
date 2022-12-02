@@ -41,14 +41,14 @@ export default function ClassFULL(props) {
     }, []);
 
 
-    useEffect(() => {
+    function getTeacherName() {
         const options = {method: 'GET', headers: {'Content-Type': 'application/json'}};
 
         fetch('http://localhost:8000/api/v1/teachers/' + selectedClass.teacherId, options)
             .then(response => response.json())
-            .then(response => setClassTeacher(response.data.lastName + " " + response.data.firstName))
+            .then(response => setClassTeacher(response.data))
             .catch(err => console.error(err));
-    }, []);
+    }
 
     function getVisibility() {
         if (selectedClass.state) {
@@ -62,11 +62,6 @@ export default function ClassFULL(props) {
             <HeaderMUI/>
             <div className="class--container">
                 <Card variant="outlined" sx={{ width: 320 }}>
-                    <a >
-                        <Typography level="h2" fontSize="md" sx={{ mb: 0.5 }}>
-                        By: {classTeacher}
-                        </Typography>
-                    </a>
                     <Typography level="body2">{selectedClass.name}</Typography>
                     <IconButton
                         aria-label="bookmark Bahamas Islands"
@@ -86,6 +81,7 @@ export default function ClassFULL(props) {
                         />
                     </AspectRatio>
                     <div className="class--aditional--info">
+                        <hr/>
                         <p>Description: {selectedClass.description}</p>
                         <p>Duration: {selectedClass.duration}</p>
                         <p>Type: {selectedClass.type}</p>

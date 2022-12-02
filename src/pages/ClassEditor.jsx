@@ -65,14 +65,51 @@ export default function ClassInfo(){
         const options = {method: 'GET', headers: {'Content-Type': 'application/json'}};
         fetch('http://localhost:8000/api/v1/class/' + id, options)
             .then(response => response.json())
-            .then(response => setClassInfo(response.data))
+            .then(response => {
+                console.log(response.data);
+                setClassInfo(response.data)})
             .catch(err => console.error(err));
     }, []);
 
     const [cookies] = useCookies(['token']);
 
+    function fillEmptyFields(newObjectClass) {
+        if (newObjectClass.name === "") {
+            newObjectClass.name = classInfo.name;
+        }
+        if (newObjectClass.description === "") {
+            newObjectClass.description = classInfo.description;
+        }
+        if (newObjectClass.duration === "") {
+            newObjectClass.duration = classInfo.duration;
+        }
+        if (newObjectClass.type === "") {
+            newObjectClass.type = classInfo.type;
+        }
+        if (newObjectClass.image === "") {
+            newObjectClass.image = classInfo.image;
+        }
+        if (newObjectClass.frequency === "") {
+            newObjectClass.frequency = classInfo.frequency;
+        }
+        if (newObjectClass.subject === "") {
+            newObjectClass.subject = classInfo.subject;
+        }
+        if (newObjectClass.price === "") {
+            newObjectClass.price = classInfo.price;
+        }
+        if (newObjectClass.state === "") {
+            newObjectClass.state = classInfo.state;
+
+        } else if (newObjectClass.state !== "" ){
+            newObjectClass.state = newObjectClass.state === "visible";
+        }
+
+        return newObjectClass;
+    }
+
     function updateClass(paramClass) {
-        const newClass = new Class({
+        const newObjectClass = new Class({
             name: paramClass.name,
             description: paramClass.description,
             duration: paramClass.duration,
@@ -84,6 +121,8 @@ export default function ClassInfo(){
             state: paramClass.state
         });
 
+        const newClass = fillEmptyFields(newObjectClass);
+
         const options = {
             method: 'PUT',
             headers: {'Content-Type': 'application/json', 'Authorization': cookies.token},
@@ -93,7 +132,7 @@ export default function ClassInfo(){
         return fetch('http://localhost:8000/api/v1/class/' + sessionStorage.getItem("classId"), options)
             .then(response => response.json())
             .then(response => {
-                alert('Class created successfully');
+                alert('Class edited successfully');
                 window.location.href = '/class/approved';
             })
             .catch(err => console.error(err));
@@ -133,7 +172,7 @@ export default function ClassInfo(){
                                     required
                                     fullWidth
                                     id="name"
-                                    value={classInfo.name}
+                                    placeholder={classInfo.name}
                                     autoFocus
                                 />
                             </Grid>
@@ -143,14 +182,14 @@ export default function ClassInfo(){
                                     required
                                     fullWidth
                                     id="description"
-                                    value={classInfo.description}
+                                    placeholder={classInfo.description}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <TextField
                                     id="duration"
                                     type="time"
-                                    defaultValue={classInfo.duration}
+                                    placeholder={classInfo.duration}
                                     fullWidth
                                 />
                             </Grid>
@@ -161,7 +200,7 @@ export default function ClassInfo(){
                                         id="type"
                                         className="basic-single"
                                         classNamePrefix="select"
-                                        defaultValue={classInfo.type}
+                                        placeholder={classInfo.type}
                                         name="type"
                                         options={typeOptions}
                                     />
@@ -182,7 +221,7 @@ export default function ClassInfo(){
                                 <>
                                     <Select
                                         id={"frequency"}
-                                        defaultValue={classInfo.frequency}
+                                        placeholder={classInfo.frequency}
                                         name="frequency"
                                         options={frequencyOptions}
                                     />
@@ -203,7 +242,7 @@ export default function ClassInfo(){
                                 <>
                                     <Select
                                         id={"subject"}
-                                        defaultValue={classInfo.subject}
+                                        placeholder={classInfo.subject}
                                         name="subject"
                                         options={subjectOptions}
                                     />
@@ -230,14 +269,14 @@ export default function ClassInfo(){
                                     required
                                     fullWidth
                                     id="image"
-                                    defaultValue={classInfo.image}
+                                    placeholder={classInfo.image}
                                 />
                             </Grid>
                             <Grid item xs={6}>
                                 <>
                                     <Select
                                         id={"state"}
-                                        defaultValue={classInfo.state}
+                                        placeholder={classInfo.state ? "Visible" : "Hidden"}
                                         name="state"
                                         options={visibleOptions}
                                     />
@@ -267,7 +306,7 @@ export default function ClassInfo(){
                                     frequency: document.getElementById('frequency').innerText.toLowerCase(),
                                     subject: document.getElementById('subject').innerText.toLowerCase(),
                                     price: document.getElementById('price').value,
-                                    state: document.getElementById('state').value
+                                    state: document.getElementById('state').innerText.toLowerCase()
                                 })}
                                 sx={{ mt: 3, mb: 2 }}
                             >

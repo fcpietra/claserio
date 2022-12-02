@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useCookies} from 'react-cookie'
+import Switch from "@mui/material/Switch";
+import FormGroup from "@mui/material/FormGroup";
 
 class Student {
     constructor(param) {
@@ -22,6 +24,19 @@ class Student {
         this.email = param.email;
         this.phone = param.phone;
         this.education = param.education;
+        this.password = param.password;
+    }
+}
+
+class Teacher {
+    constructor(param) {
+        this.firstName = param.firstName;
+        this.lastName = param.lastName;
+        this.birthday = param.birthday;
+        this.email = param.email;
+        this.phone = param.phone;
+        this.title = param.title;
+        this.experience = param.experience;
         this.password = param.password;
     }
 }
@@ -56,7 +71,7 @@ export default function SignUp() {
     }
 
 
-    function create(student){
+    function createStudent(student){
 
         const newStudent = new Student ({
             firstName: student.firstName,
@@ -80,6 +95,31 @@ export default function SignUp() {
             .catch(err => console.error(err));
     }
 
+    function createTeacher(teacher){
+
+        const newTeacher = new Teacher ({
+            firstName: teacher.firstName,
+            lastName: teacher.lastName,
+            birthday: teacher.birthday,
+            email: teacher.email,
+            phone: teacher.phone,
+            title: teacher.title,
+            experience: teacher.experience,
+            password: teacher.password
+        });
+
+        const options = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+            body: JSON.stringify(newTeacher)
+        };
+
+        return fetch('http://localhost:8000/api/v1/teachers', options)
+            .then(response => response.json())
+            .then(response => validate(response))
+            .catch(err => console.error(err));
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -88,6 +128,22 @@ export default function SignUp() {
             password: data.get('password'),
         });
     };
+
+    const [state, setState] = React.useState(false);
+
+    const handleStudentChange = (event) => {
+        sessionStorage.setItem('role', 'student');
+        setState(event.target.checked);
+        document.getElementById("teacher").disabled = false;
+        document.getElementById("student").disabled = true;
+    }
+
+    const handleTeacherChange = (event) => {
+        sessionStorage.setItem('role', 'teacher');
+        setState(!event.target.checked);
+        document.getElementById("teacher").disabled = true;
+        document.getElementById("student").disabled = false;
+    }
 
     return (
         <>
@@ -108,6 +164,16 @@ export default function SignUp() {
                         <Typography component="h1" variant="h5">
                             Sign up
                         </Typography>
+                        <FormGroup>
+                            <FormControlLabel
+                                control={<Switch id="student" checked={state} onChange={handleStudentChange} />}
+                                label="Student"
+                            />
+                            <FormControlLabel
+                                control={<Switch id="teacher" checked={!state} onChange={handleTeacherChange} />}
+                                label="Teacher"
+                            />
+                        </FormGroup>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6}>
@@ -175,16 +241,42 @@ export default function SignUp() {
                                         autoFocus
                                     />
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
+                                { sessionStorage.getItem("role") === "student" ?
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            id="education"
+                                            label="Education"
+                                            name="education"
+                                            autoComplete="family-name"
+                                        />
+                                    </Grid>
+                                    : <>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            id="title"
+                                            label="Title"
+                                            name="title"
+                                            autoComplete="family-name"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={12}>
                                     <TextField
-                                        required
-                                        fullWidth
-                                        id="education"
-                                        label="Education"
-                                        name="education"
-                                        autoComplete="family-name"
+                                    required
+                                    fullWidth
+                                    id="experience"
+                                    label="Experience"
+                                    name="experience"
+                                    autoComplete="family-name"
                                     />
-                                </Grid>
+                                    </Grid>
+                                    </>
+                                }
+
+
                                 <Grid item xs={12}>
                                     <FormControlLabel
                                         control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -196,15 +288,29 @@ export default function SignUp() {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                onClick={() => create({
-                                    firstName: document.getElementById('firstName').value,
-                                    lastName: document.getElementById('lastName').value,
-                                    birthday: document.getElementById('birthday').value,
-                                    email: document.getElementById('email').value,
-                                    phone: document.getElementById('phone').value,
-                                    education: document.getElementById('education').value,
-                                    password: document.getElementById('password').value
-                                })}
+                                onClick={() =>
+                                    sessionStorage.getItem("role") === "student" ?
+                                        createStudent({
+                                            firstName: document.getElementById("firstName").value,
+                                            lastName: document.getElementById("lastName").value,
+                                            birthday: document.getElementById("birthday").value,
+                                            email: document.getElementById("email").value,
+                                            phone: document.getElementById("phone").value,
+                                            education: document.getElementById("education").value,
+                                            password: document.getElementById("password").value
+                                        })
+                                        : createTeacher({
+                                            firstName: document.getElementById("firstName").value,
+                                            lastName: document.getElementById("lastName").value,
+                                            birthday: document.getElementById("birthday").value,
+                                            email: document.getElementById("email").value,
+                                            phone: document.getElementById("phone").value,
+                                            title: document.getElementById("title").value,
+                                            experience: document.getElementById("experience").value,
+                                            password: document.getElementById("password").value
+                                        }
+                                    )
+                                }
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 Sign Up

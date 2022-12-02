@@ -5,7 +5,7 @@ import {useEffect} from "react";
 import HeaderMUI from "../components/HeaderMUI";
 
 
-export default function RequestedClasses() {
+export default function AcceptedClasses() {
     const [cookies] = useCookies(['token']);
 
     const [requests, setRequests] = React.useState([]);
@@ -18,49 +18,11 @@ export default function RequestedClasses() {
             }
         };
 
-        fetch('http://localhost:8000/api/v1/reserve/teacher/pending/', options)
+        fetch('http://localhost:8000/api/v1/reserve/teacher/accepted/', options)
             .then(response => response.json())
             .then(response => setRequests(response.data))
             .catch(err => console.error(err));
     }, []);
-
-    function approveClassRequest(id) {
-        const body = {
-            state: 'accepted'
-        };
-        const options = {
-            method: 'PUT',
-            headers: {
-                Authorization: cookies.token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        };
-
-        fetch('http://localhost:8000/api/v1/reserve/' + id, options)
-            .then(response => response.json())
-            .then(response => window.location.reload())
-            .catch(err => console.error(err));
-    }
-
-    function rejectClassRequest(id) {
-        const body = {
-            state: 'canceled'
-        };
-        const options = {
-            method: 'PUT',
-            headers: {
-                Authorization: cookies.token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        };
-
-        fetch('http://localhost:8000/api/v1/reserve/' + id, options)
-            .then(response => response.json())
-            .then(response => window.location.reload())
-            .catch(err => console.error(err));
-    }
 
     function finishClassRequest(id) {
         const body = {
@@ -85,7 +47,7 @@ export default function RequestedClasses() {
         <>
             <HeaderMUI/>
             <div className="main-content-container">
-                <h1>Requested Classes</h1>
+                <h1>Accepted Classes</h1>
             </div>
             {requests.map((r) => (
                 <div className="request-comments--container">
@@ -93,13 +55,6 @@ export default function RequestedClasses() {
                     <p>Student: {r.studentId}</p>
                     <p>Want's to contract: {r.classId}</p>
                     <p>Message: {r.message}</p>
-                    <button onClick={
-                        () => approveClassRequest(r._id)
-                    }>Approve</button>
-                    <button onClick={
-                        () => rejectClassRequest(r._id)
-                    }>Reject</button>
-                    <br/>
                     <button onClick={
                         () => finishClassRequest(r._id)
                     }>Finish</button>

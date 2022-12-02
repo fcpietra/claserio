@@ -77,7 +77,7 @@ export default function Class(props) {
         fetch('http://localhost:8000/api/v1/comment', options)
             .then(response => response.json())
             .then(response => {
-                alert(JSON.stringify(response))
+                alert("Comment Sent");
                 window.location.href = '/home';
             })
             .catch(err => console.error(err));
@@ -160,7 +160,6 @@ export default function Class(props) {
                         </Typography>
                     </CardContent>
                     {
-                        // FIXME
                         props.rateable ? (
                             <Rating/>
                         ) : undefined

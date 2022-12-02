@@ -122,16 +122,16 @@ export default function SignIn() {
                             Sign in
                         </Typography>
 
-                        <FormGroup>
-                            <FormControlLabel
-                                control={<Switch id="student" checked={state} onChange={handleStudentChange} />}
-                                label="Student"
-                            />
-                            <FormControlLabel
-                                control={<Switch id="teacher" checked={!state} onChange={handleTeacherChange} />}
-                                label="Teacher"
-                            />
-                        </FormGroup>
+                            <FormGroup>
+                                <FormControlLabel
+                                    control={<Switch id="student" checked={state} onChange={handleStudentChange} />}
+                                    label="Student"
+                                />
+                                <FormControlLabel
+                                    control={<Switch id="teacher" checked={!state} onChange={handleTeacherChange} />}
+                                    label="Teacher"
+                                />
+                            </FormGroup>
 
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <TextField
