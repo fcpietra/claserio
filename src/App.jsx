@@ -16,6 +16,7 @@ import ClassEditor from "./pages/ClassEditor";
 import RequestedComments from "./pages/RequestedComments";
 import RequestedClasses from "./pages/RequestedClasses";
 import AcceptedClasses from "./pages/AcceptedClasses";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path="class/approved" element={<CurrentClasses/>}/>
             <Route path="/class" element={<ClassInfo/>}/>
             <Route path="/recovery" element={<Recovery/>}/>
+            <Route path="/resetpassword" element={<ResetPassword/>}/>
             <Route path="*" element={<NotFound/>}/>
         </Routes>
       </div>

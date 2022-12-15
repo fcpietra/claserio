@@ -52,7 +52,7 @@ export default function Recovery(){
                 if (response.code === 200) {
                     alert("Password changed successfully");
                     setCodeValidated(true);
-                    window.location.href = "/singIn";
+                    window.location.href = "/login";
                 } else {
                     alert(response.message);
                 }

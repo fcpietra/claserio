@@ -27,6 +27,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import KeyIcon from '@mui/icons-material/Key';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -276,6 +277,17 @@ export default function SearchAppBar() {
                                         <InfoIcon />
                                     </ListItemIcon>
                                     <ListItemText primary={"Información"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </a>
+
+                        <a className="drawer--item" href="/resetpassword">
+                            <ListItem key={"logOut"} disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <KeyIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"Reset Password"} />
                                 </ListItemButton>
                             </ListItem>
                         </a>
