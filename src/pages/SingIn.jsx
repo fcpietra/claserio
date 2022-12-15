@@ -16,24 +16,12 @@ import Switch from "@mui/material/Switch";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
 const theme = createTheme();
 
 export default function SignIn() {
     const [cookies, setCookie] = useCookies(['token']);
+    const [state, setState] = React.useState(false);
+    const [passwordHide, setPasswordHide] = React.useState(true);
 
     function findStudentByEmail(email, password) {
         const options = {method: 'GET'};
@@ -76,8 +64,6 @@ export default function SignIn() {
         findStudentByEmail(data.get('email'), data.get('password')).then(r => console.log(r));
     };
 
-    const [state, setState] = React.useState(false);
-
     const handleStudentChange = (event) => {
         setState(event.target.checked);
     }
@@ -90,15 +76,13 @@ export default function SignIn() {
         <ThemeProvider theme={theme}>
 
             <Grid container component="main" sx={{ height: '100vh' }}>
-
-
                 <Grid
                     item
                     xs={false}
                     sm={4}
                     md={7}
                     sx={{
-                        backgroundImage: 'url(https://source.unsplash.com/random)',
+                        backgroundImage: 'url(https://researchleap.com/wp-content/uploads/2022/02/Our_Best_Education_Articles_of_2020.jpeg)',
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
@@ -150,13 +134,14 @@ export default function SignIn() {
                                 fullWidth
                                 name="password"
                                 label="Password"
-                                type="password"
+                                type={passwordHide ? "password" : "text"}
                                 id="password"
                                 autoComplete="current-password"
                             />
                             <FormControlLabel
                                 control={<Checkbox value="show" color="primary" />}
                                 label="Show password"
+                                onChange={() => setPasswordHide(!passwordHide)}
                             />
                             <Button
                                 type="submit"

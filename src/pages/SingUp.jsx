@@ -59,6 +59,12 @@ const theme = createTheme();
 
 export default function SignUp() {
     const [cookies, setCookie] = useCookies(['token']);
+    const [state, setState] = React.useState(false);
+
+    React.useEffect(() => {
+        sessionStorage.removeItem("role");
+        sessionStorage.setItem("role", "teacher");
+    }, []);
 
     function validate(response) {
         if (response.status === 201) {
@@ -128,8 +134,6 @@ export default function SignUp() {
             password: data.get('password'),
         });
     };
-
-    const [state, setState] = React.useState(false);
 
     const handleStudentChange = (event) => {
         sessionStorage.setItem('role', 'student');
@@ -276,13 +280,6 @@ export default function SignUp() {
                                     </>
                                 }
 
-
-                                <Grid item xs={12}>
-                                    <FormControlLabel
-                                        control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                        label="I want to receive inspiration, marketing promotions and updates via email."
-                                    />
-                                </Grid>
                             </Grid>
                             <Button
                                 type="submit"
