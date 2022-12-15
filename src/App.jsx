@@ -37,7 +37,6 @@ function App() {
             <Route path="class/pending" element={<PendingClasses/>}/>
             <Route path="class/approved" element={<CurrentClasses/>}/>
             <Route path="/class" element={<ClassInfo/>}/>
-            <Route path="/profile" element={<Recovery/>}/>
             <Route path="/recovery" element={<Recovery/>}/>
             <Route path="*" element={<NotFound/>}/>
         </Routes>
