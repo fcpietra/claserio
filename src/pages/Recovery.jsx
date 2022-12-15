@@ -5,23 +5,23 @@ export default function Recovery(){
     const [codeSent, setCodeSent] = React.useState(false);
     const [codeValidated, setCodeValidated] = React.useState(false);
 
-    const handleChange = (event, newAlignment) => {
-        setCodeSent(newAlignment);
-    };
-
     const createVerificationCode = () => {
         let email = document.getElementById("email").value;
-        alert("Sending verification code to " + email);
-        localStorage.setItem("email", email);
-        setCodeSent(true);
-    }
 
-    function sendCode(){
-        let code = document.getElementById("code").value;
-        let email = localStorage.getItem("email");
+        const options = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: '{"email": "' + email + '"}'
+        };
 
-
-
+        fetch('http://localhost:8000/api/v1/recovery', options)
+            .then(response => response.json())
+            .then(response => {
+                sessionStorage.setItem("email", email);
+                setCodeSent(true);
+                alert("Code sent to your email");
+            })
+            .catch(err => console.error(err));
     }
 
     const sendVerificationCode = () => {
@@ -34,10 +34,31 @@ export default function Recovery(){
             return;
         }
 
-        setCodeValidated(true);
+        const recovery = {
+            email: sessionStorage.getItem("email"),
+            code: code,
+            newPassword: password
+        }
 
-        alert("Password changed successfully");
-        window.location.href = "/singIn";
+        const options = {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(recovery)
+        };
+
+        fetch('http://localhost:8000/api/v1/recovery', options)
+            .then(response => response.json())
+            .then(response => {
+                if (response.code === 200) {
+                    alert("Password changed successfully");
+                    setCodeValidated(true);
+                    window.location.href = "/singIn";
+                } else {
+                    alert(response.message);
+                }
+            })
+            .catch(err => console.error(err));
+
     }
 
     return (
